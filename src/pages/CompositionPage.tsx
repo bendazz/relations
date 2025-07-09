@@ -128,14 +128,6 @@ const CompositionPage: React.FC = () => {
     return { x, y };
   };
 
-  // Check if a path exists through intermediate node (for composition)
-  const getPathsThrough = (from: number, to: number): number[] => {
-    return relationR
-      .filter(([a, _]) => a === from)
-      .map(([_, b]) => b)
-      .filter(b => relationS.some(([bPrime, c]) => bPrime === b && c === to));
-  };
-
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
@@ -340,9 +332,13 @@ const CompositionPage: React.FC = () => {
               const toPos = getNodePosition(1, to);
               
               // Check if this edge is part of a composition path
-              const isPartOfComposition = compositionRS.some(([compFrom, compTo]) => {
-                return compFrom === from && getPathsThrough(compFrom, compTo).includes(to);
-              });
+              // An edge (from, to) in R is part of composition if there exists some c 
+              // such that (to, c) is in S and (from, c) is in the composition
+              const isPartOfComposition = relationS.some(([sFrom, sTo]) => 
+                sFrom === to && compositionRS.some(([compFrom, compTo]) => 
+                  compFrom === from && compTo === sTo
+                )
+              );
               
               // Phase 1 (0-0.33): Single edges fade out, composition edges stay
               // Phase 2 (0.33-0.67): Composition edges turn red
@@ -391,9 +387,13 @@ const CompositionPage: React.FC = () => {
               const toPos = getNodePosition(2, to);
               
               // Check if this edge is part of a composition path
-              const isPartOfComposition = compositionRS.some(([compFrom, compTo]) => {
-                return compTo === to && getPathsThrough(compFrom, compTo).includes(from);
-              });
+              // An edge (from, to) in S is part of composition if there exists some a
+              // such that (a, from) is in R and (a, to) is in the composition
+              const isPartOfComposition = relationR.some(([rFrom, rTo]) => 
+                rTo === from && compositionRS.some(([compFrom, compTo]) => 
+                  compFrom === rFrom && compTo === to
+                )
+              );
               
               // Phase 1 (0-0.33): Single edges fade out, composition edges stay
               // Phase 2 (0.33-0.67): Composition edges turn red

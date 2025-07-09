@@ -1,31 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <script type="text/javascript">
-        // Simple redirect to main app
-        var currentPath = window.location.pathname;
-        var basePath = '/relations/';
-        
-        if (currentPath !== basePath && currentPath !== basePath + 'index.html') {
-            // Extract the route from the path
-            var route = currentPath.replace(basePath, '');
-            if (route.startsWith('/')) {
-                route = route.substring(1);
-            }
-            if (route === '') {
-                route = '/';
-            } else {
-                route = '/' + route;
-            }
-            // Redirect to hash-based URL
-            window.location.replace(basePath + '#' + route);
-        } else {
-            // Just go to the main app
-            window.location.replace(basePath + '#/');
-        }
-    </script>
-</head>
-<body>
-    <p>Redirecting...</p>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relations Learning App</title>
+    <script type="module" crossorigin src="./assets/index-8a5ab70e.js"></script>
+    <link rel="stylesheet" href="./assets/index-68877848.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>

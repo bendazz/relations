@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>Relations Learning App</title>
     <script type="text/javascript">
-        // Redirect to root with hash
-        var path = window.location.pathname;
-        var repo = '/relations';
-        if (path.startsWith(repo)) {
-            var hash = path.slice(repo.length) || '/';
-            window.location.replace(repo + '/#' + hash);
+        // Simple redirect to main app
+        var currentPath = window.location.pathname;
+        var basePath = '/relations/';
+        
+        if (currentPath !== basePath && currentPath !== basePath + 'index.html') {
+            // Extract the route from the path
+            var route = currentPath.replace(basePath, '');
+            if (route.startsWith('/')) {
+                route = route.substring(1);
+            }
+            if (route === '') {
+                route = '/';
+            } else {
+                route = '/' + route;
+            }
+            // Redirect to hash-based URL
+            window.location.replace(basePath + '#' + route);
         } else {
-            window.location.replace('/relations/#/');
+            // Just go to the main app
+            window.location.replace(basePath + '#/');
         }
     </script>
 </head>
 <body>
+    <p>Redirecting...</p>
 </body>
 </html>

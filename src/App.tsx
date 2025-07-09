@@ -9,7 +9,7 @@ import HomeworkPage from './pages/HomeworkPage';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/relations">
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
